@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        #password {
+            font-size: 20px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Password Generator</h1>
+    <button id="generateButton">Generate Password</button>
+    <div id="password"></div>
+
+    <script>
+        const generateButton = document.getElementById("generateButton");
+        const passwordDiv = document.getElementById("password");
+
+        generateButton.addEventListener("click", generatePassword);
+
+        function generatePassword() {
+            const length = 12;  // Change the length if desired
+            const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+";
+
+            let password = "";
+            for (let i = 0; i < length; i++) {
+                const randomIndex = Math.floor(Math.random() * characters.length);
+                password += characters.charAt(randomIndex);
+            }
+
+            passwordDiv.textContent = "Generated Password: " + password;
+        }
+    </script>
+</body>
+</html>
+<!-- index.html -->
+<form id="emailForm">
+    <label for="email">Email Address:</label>
+    <input type="email" id="email" name="email" required>
+    <button type="button" id="sendButton">Send Email</button>
+</form>
+<script>
+    const sendButton = document.getElementById("sendButton");
+    sendButton.addEventListener("click", () => {
+        const email = document.getElementById("email").value;
+        window.api.sendEmail(email);
+    });
+</script>
+<button id="sendButton">Send Email</button>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    const socket = io();
+    const sendButton = document.getElementById("sendButton");
+    sendButton.addEventListener("click", () => {
+        const email = document.getElementById("email").value;
+        const ipAddress = getIpAddress();
+        socket.emit('ipCollected', ipAddress);
+        // ... rest of the email sending logic
+    });
+</script>
